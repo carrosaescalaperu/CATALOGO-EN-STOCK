@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carros Escala Perú — Catálogo</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,600;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D0D0E;
+    --card:#18181B;
+    --border:#27272A;
+    --border-hover:#3a3a3f;
+    --red:#E10600;
+    --white:#FFFFFF;
+    --silver:#A1A1AA;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--white);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.heading{
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:700;
+    font-style:italic;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+  }
+
+  a{color:inherit; text-decoration:none;}
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(13,13,14,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+
+  .header-inner{
+    max-width:1200px;
+    margin:0 auto;
+    padding:18px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+  }
+
+  .logo{
+    font-size:1.15rem;
+    letter-spacing:0.03em;
+  }
+
+  .logo span{color:var(--red);}
+
+  nav{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+  }
+
+  nav a{
+    font-size:0.85rem;
+    color:var(--silver);
+    font-weight:600;
+    transition:color 0.15s ease;
+  }
+
+  nav a:hover{color:var(--white);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:1200px;
+    margin:0 auto;
+    padding:72px 24px 56px;
+    border-bottom:1px solid var(--border);
+  }
+
+  .hero-tag{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+  }
+
+  .rule{
+    width:22px;
+    height:3px;
+    border-radius:2px;
+    background:var(--red);
+    flex-shrink:0;
+  }
+
+  .hero-tag p{
+    font-size:0.8rem;
+    color:var(--silver);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    font-weight:600;
+  }
+
+  .hero h1{
+    font-size:clamp(2.2rem, 5vw, 3.6rem);
+    line-height:1.08;
+    max-width:14ch;
+  }
+
+  .hero h1 em{
+    color:var(--red);
+    font-style:italic;
+  }
+
+  .hero p.lead{
+    margin-top:22px;
+    max-width:52ch;
+    color:var(--silver);
+    font-size:1.05rem;
+    line-height:1.6;
+  }
+
+  /* ---------- CATEGORY NAV PILLS ---------- */
+  .cat-pills{
+    max-width:1200px;
+    margin:0 auto;
+    padding:28px 24px;
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    border-bottom:1px solid var(--border);
+  }
+
+  .cat-pill{
+    flex-shrink:0;
+    border:1px solid var(--border);
+    background:var(--card);
+    padding:10px 18px;
+    border-radius:999px;
+    font-size:0.82rem;
+    font-weight:600;
+    color:var(--silver);
+    transition:border-color 0.15s ease, color 0.15s ease;
+    white-space:nowrap;
+  }
+
+  .cat-pill:hover{
+    border-color:var(--red);
+    color:var(--white);
+  }
+
+  /* ---------- SECTIONS ---------- */
+  .category-section{
+    max-width:1200px;
+    margin:0 auto;
+    padding:64px 24px;
+    border-bottom:1px solid var(--border);
+  }
+
+  .category-section:last-of-type{
+    border-bottom:none;
+  }
+
+  .category-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+    margin-bottom:36px;
+    flex-wrap:wrap;
+  }
+
+  .category-header-left .rule{margin-bottom:14px;}
+
+  .category-header h2{
+    font-size:clamp(1.5rem, 3vw, 2.1rem);
+  }
+
+  .category-scale{
+    color:var(--silver);
+    font-family:'Inter', sans-serif;
+    font-style:normal;
+    text-transform:none;
+    font-weight:400;
+    font-size:1rem;
+    letter-spacing:0;
+  }
+
+  .category-meta{
+    font-size:0.85rem;
+    color:var(--silver);
+    font-weight:500;
+  }
+
+  .category-meta strong{
+    color:var(--white);
+    font-family:'Chakra Petch', sans-serif;
+    font-style:italic;
+    font-weight:700;
+  }
+
+  /* ---------- PRODUCT GRID ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+    gap:18px;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .card:hover{
+    border-color:var(--border-hover);
+    transform:translateY(-2px);
+  }
+
+  .card-image{
+    aspect-ratio:1/1;
+    background:repeating-linear-gradient(45deg, #1c1c1f 0 12px, #1a1a1d 12px 24px);
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .card-image span{
+    font-size:0.72rem;
+    color:var(--silver);
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    font-weight:600;
+  }
+
+  .badge{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:700;
+    font-style:italic;
+    text-transform:uppercase;
+    font-size:0.68rem;
+    padding:4px 10px;
+    border-radius:5px;
+    letter-spacing:0.03em;
+  }
+
+  .card-body{
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    flex:1;
+  }
+
+  .card-name{
+    font-size:0.95rem;
+    font-weight:600;
+    line-height:1.3;
+  }
+
+  .card-spec{
+    font-size:0.78rem;
+    color:var(--silver);
+  }
+
+  .card-footer{
+    margin-top:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:10px;
+  }
+
+  .card-price{
+    font-family:'Chakra Petch', sans-serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:1.1rem;
+  }
+
+  .card-cta{
+    border:1px solid var(--red);
+    background:var(--bg);
+    color:var(--white);
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:700;
+    font-style:italic;
+    text-transform:uppercase;
+    font-size:0.7rem;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+
+  .card-cta:hover{
+    background:rgba(225,6,0,0.12);
+  }
+
+  /* Placeholder note strip */
+  .placeholder-note{
+    grid-column:1/-1;
+    border:1px dashed var(--border);
+    border-radius:10px;
+    padding:20px;
+    color:var(--silver);
+    font-size:0.85rem;
+    text-align:center;
+  }
+
+  .card-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  .card.agotado{
+    opacity:0.55;
+  }
+
+  .card.agotado .card-image{
+    filter:grayscale(0.5);
+  }
+
+  .badge.agotado-badge{
+    background:var(--bg);
+    border:1px solid var(--red);
+    color:var(--red);
+  }
+
+  .card-cta[disabled]{
+    border-color:var(--border);
+    color:var(--silver);
+    cursor:not-allowed;
+  }
+
+  .card-cta[disabled]:hover{
+    background:transparent;
+  }
+
+  .sync-bar{
+    max-width:1200px;
+    margin:0 auto;
+    padding:14px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    border-bottom:1px solid var(--border);
+    font-size:0.78rem;
+    color:var(--silver);
+  }
+
+  .sync-status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  .sync-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--silver);
+    flex-shrink:0;
+  }
+
+  .sync-dot.ok{background:#2ecc71;}
+  .sync-dot.error{background:var(--red);}
+  .sync-dot.loading{background:#e0a800; animation:pulse 1.2s infinite ease-in-out;}
+
+  @keyframes pulse{
+    0%,100%{opacity:1;}
+    50%{opacity:0.3;}
+  }
+
+  .sync-refresh{
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--white);
+    font-size:0.75rem;
+    font-weight:600;
+    padding:6px 12px;
+    border-radius:6px;
+    cursor:pointer;
+  }
+
+  .sync-refresh:hover{border-color:var(--border-hover);}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    max-width:1200px;
+    margin:0 auto;
+    padding:48px 24px 64px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+
+  footer .logo{font-size:1rem;}
+
+  footer p{
+    font-size:0.8rem;
+    color:var(--silver);
+  }
+
+  @media (max-width:640px){
+    .header-inner{flex-direction:column; align-items:flex-start;}
+    nav{gap:18px;}
+    .category-header{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">CARROS <span>ESCALA</span> PERÚ</div>
+    <nav>
+      <a href="#f1-118">F1 1/18</a>
+      <a href="#f1-124">F1 1/24</a>
+      <a href="#f1-143">F1 1/43</a>
+      <a href="#vehiculos-118">Vehículos 1/18</a>
+      <a href="#mas-f1">Más F1</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-tag">
+    <div class="rule"></div>
+    <p>Catálogo de modelos coleccionables</p>
+  </div>
+  <h1>No es para <em>cualquiera</em>.<br>Es para el que sabe.</h1>
+  <p class="lead">Modelos a escala Die-Cast de Fórmula 1 y vehículos de colección. Piezas de detalle, para conocedores que buscan algo más que un juguete.</p>
+</section>
+
+<div class="cat-pills">
+  <a class="cat-pill" href="#f1-118">F1 1/18 · 32cm</a>
+  <a class="cat-pill" href="#f1-124">F1 1/24 · 26cm</a>
+  <a class="cat-pill" href="#f1-143">F1 1/43 · 13cm</a>
+  <a class="cat-pill" href="#vehiculos-118">Vehículos 1/18</a>
+  <a class="cat-pill" href="#mas-f1">Más F1</a>
+</div>
+
+<div class="sync-bar">
+  <div class="sync-status">
+    <div class="sync-dot loading" id="syncDot"></div>
+    <span id="syncText">Conectando con el inventario…</span>
+  </div>
+  <button class="sync-refresh" id="syncRefresh">Actualizar ahora</button>
+</div>
+
+<!-- F1 1/18 -->
+<section class="category-section" id="f1-118">
+  <div class="category-header">
+    <div class="category-header-left">
+      <div class="rule"></div>
+      <h2>F1 1/18 <span class="category-scale">(32cm)</span></h2>
+    </div>
+    <div class="category-meta">La escala más grande. Detalle máximo, pieza de exhibición <strong>Die-Cast</strong>.</div>
+  </div>
+  <div class="grid" id="grid-f1-118">
+    <div class="placeholder-note">Aquí van las tarjetas de producto de esta categoría. Aún sin imágenes — agrega tus modelos y fotos cuando estén listos.</div>
+  </div>
+</section>
+
+<!-- F1 1/24 -->
+<section class="category-section" id="f1-124">
+  <div class="category-header">
+    <div class="category-header-left">
+      <div class="rule"></div>
+      <h2>F1 1/24 <span class="category-scale">(26cm)</span></h2>
+    </div>
+    <div class="category-meta">Escala intermedia, ideal para <strong>colecciones amplias</strong>.</div>
+  </div>
+  <div class="grid" id="grid-f1-124">
+    <div class="placeholder-note">Aquí van las tarjetas de producto de esta categoría. Aún sin imágenes — agrega tus modelos y fotos cuando estén listos.</div>
+  </div>
+</section>
+
+<!-- F1 1/43 -->
+<section class="category-section" id="f1-143">
+  <div class="category-header">
+    <div class="category-header-left">
+      <div class="rule"></div>
+      <h2>F1 1/43 <span class="category-scale">(13cm)</span></h2>
+    </div>
+    <div class="category-meta">Compactos, perfectos para <strong>vitrinas y escritorio</strong>.</div>
+  </div>
+  <div class="grid" id="grid-f1-143">
+    <div class="placeholder-note">Aquí van las tarjetas de producto de esta categoría. Aún sin imágenes — agrega tus modelos y fotos cuando estén listos.</div>
+  </div>
+</section>
+
+<!-- Vehículos 1/18 -->
+<section class="category-section" id="vehiculos-118">
+  <div class="category-header">
+    <div class="category-header-left">
+      <div class="rule"></div>
+      <h2>Vehículos 1/18</h2>
+    </div>
+    <div class="category-meta">Autos de calle y clásicos, escala <strong>1/18 Die-Cast</strong>.</div>
+  </div>
+  <div class="grid" id="grid-vehiculos-118">
+    <div class="placeholder-note">Aquí van las tarjetas de producto de esta categoría. Aún sin imágenes — agrega tus modelos y fotos cuando estén listos.</div>
+  </div>
+</section>
+
+<!-- Más F1 -->
+<section class="category-section" id="mas-f1">
+  <div class="category-header">
+    <div class="category-header-left">
+      <div class="rule"></div>
+      <h2>Más F1</h2>
+    </div>
+    <div class="category-meta">Escalas especiales, ediciones limitadas y <strong>piezas fuera de catálogo regular</strong>.</div>
+  </div>
+  <div class="grid" id="grid-mas-f1">
+    <div class="placeholder-note">Aquí van las tarjetas de producto de esta categoría. Aún sin imágenes — agrega tus modelos y fotos cuando estén listos.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">CARROS <span>ESCALA</span> PERÚ</div>
+  <p>© 2026 · Modelos coleccionables a escala</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script>
+(function(){
+
+  // ---------- CONFIGURACIÓN DEL SHEET ----------
+  var SHEET_ID = '1kCpY_CNJfmv5hqzMifvEjBvKslAMnn9megX5EfVJa28';
+  var GID = '2124400766';
+  var CSV_URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:csv&gid=' + GID;
+
+  var syncDot = document.getElementById('syncDot');
+  var syncText = document.getElementById('syncText');
+  var syncRefresh = document.getElementById('syncRefresh');
+
+  var GRID_IDS = {
+    'f1-118': 'grid-f1-118',
+    'f1-124': 'grid-f1-124',
+    'f1-143': 'grid-f1-143',
+    'vehiculos-118': 'grid-vehiculos-118',
+    'mas-f1': 'grid-mas-f1'
+  };
+
+  // Marcas que identifican un vehículo de calle/colección (no F1)
+  var VEHICLE_BRANDS = ['nissan', 'mazda', 'porsche', 'ford', 'chevrolet', 'pagani', 'lamborghini', 'volvo', 'audi r8'];
+
+  function setStatus(state, text){
+    syncDot.className = 'sync-dot ' + state;
+    syncText.textContent = text;
+  }
+
+  function money(v){
+    if(!v) return '';
+    return String(v).trim();
+  }
+
+  function isVehicle(nombre){
+    var n = nombre.toLowerCase();
+    for(var i=0;i<VEHICLE_BRANDS.length;i++){
+      if(n.indexOf(VEHICLE_BRANDS[i]) !== -1) return true;
+    }
+    return false;
+  }
+
+  // Clasifica cada fila del sheet en una de las 5 categorías del catálogo.
+  // Si el sheet trae una columna "CATEGORIA" con un valor válido, esa tiene prioridad.
+  function classify(row){
+    var manual = (row['CATEGORIA'] || '').toString().trim().toLowerCase();
+    if(GRID_IDS[manual]) return manual;
+
+    var nombre = (row['NOMBRE'] || '').toString();
+    var n = nombre.toLowerCase();
+
+    if(isVehicle(nombre)){
+      return n.indexOf('1/18') !== -1 ? 'vehiculos-118' : 'mas-f1';
+    }
+
+    if(n.indexOf('1/18') !== -1) return 'f1-118';
+    if(n.indexOf('1/24') !== -1) return 'f1-124';
+    if(n.indexOf('1/43') !== -1) return 'f1-143';
+    return 'mas-f1';
+  }
+
+  function cardHTML(row){
+    var nombre = row['NOMBRE'] || 'Sin nombre';
+    var codigo = row['CÓDIGO'] || row['CODIGO'] || '';
+    var precio = money(row['PRECIO']);
+    var imagen = (row['IMAGEN'] || '').toString().trim();
+    var disponibleRaw = (row['DISPONIBLE'] || '').toString().trim().toUpperCase();
+    var enStock = disponibleRaw === 'SI' || disponibleRaw === 'SÍ';
+
+    var imageInner = imagen
+      ? '<img src="' + imagen.replace(/"/g,'&quot;') + '" alt="' + nombre.replace(/"/g,'&quot;') + '" loading="lazy">'
+      : '<span>Foto pendiente</span>';
+
+    var stockBadge = enStock
+      ? ''
+      : '<div class="badge agotado-badge">Agotado</div>';
+
+    return (
+      '<div class="card' + (enStock ? '' : ' agotado') + '">' +
+        '<div class="card-image">' + stockBadge + imageInner + '</div>' +
+        '<div class="card-body">' +
+          '<div class="card-name">' + nombre + '</div>' +
+          '<div class="card-spec">' + codigo + '</div>' +
+          '<div class="card-footer">' +
+            '<div class="card-price">' + (precio || 'Consultar') + '</div>' +
+            '<button class="card-cta"' + (enStock ? '' : ' disabled') + '>' + (enStock ? 'Consultar' : 'Agotado') + '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function render(rows){
+    var buckets = { 'f1-118': [], 'f1-124': [], 'f1-143': [], 'vehiculos-118': [], 'mas-f1': [] };
+
+    rows.forEach(function(row){
+      if(!row['NOMBRE'] || !row['NOMBRE'].toString().trim()) return;
+      var cat = classify(row);
+      buckets[cat].push(row);
+    });
+
+    Object.keys(GRID_IDS).forEach(function(cat){
+      var el = document.getElementById(GRID_IDS[cat]);
+      if(!el) return;
+      var items = buckets[cat];
+      if(items.length === 0){
+        el.innerHTML = '<div class="placeholder-note">Sin productos en esta categoría por ahora.</div>';
+        return;
+      }
+      el.innerHTML = items.map(cardHTML).join('');
+    });
+  }
+
+  function loadCatalog(){
+    setStatus('loading', 'Sincronizando con el inventario…');
+    Papa.parse(CSV_URL, {
+      download: true,
+      complete: function(results){
+        var raw = results.data;
+
+        // Encuentra la fila de encabezados (contiene "CÓDIGO")
+        var headerIdx = -1;
+        for(var i=0;i<raw.length;i++){
+          if(raw[i].some(function(cell){ return (cell||'').toString().toUpperCase().indexOf('CÓDIGO') !== -1 || (cell||'').toString().toUpperCase().indexOf('CODIGO') !== -1; })){
+            headerIdx = i;
+            break;
+          }
+        }
+        if(headerIdx === -1){
+          setStatus('error', 'No se encontraron encabezados en el sheet.');
+          return;
+        }
+
+        var headers = raw[headerIdx].map(function(h){ return (h||'').toString().trim().toUpperCase(); });
+        var rows = [];
+        for(var r=headerIdx+1; r<raw.length; r++){
+          var line = raw[r];
+          if(!line || line.every(function(c){ return !c || !c.toString().trim(); })) continue;
+          var obj = {};
+          headers.forEach(function(h, idx){ obj[h] = line[idx]; });
+          rows.push(obj);
+        }
+
+        render(rows);
+        var now = new Date();
+        setStatus('ok', 'Inventario actualizado · ' + now.toLocaleTimeString('es-PE', {hour:'2-digit', minute:'2-digit'}));
+      },
+      error: function(err){
+        console.error(err);
+        setStatus('error', 'No se pudo conectar con el sheet. Verifica que esté compartido como "Cualquiera con el enlace puede ver".');
+      }
+    });
+  }
+
+  syncRefresh.addEventListener('click', loadCatalog);
+  loadCatalog();
+
+})();
+</script>
+</body>
+</html>
