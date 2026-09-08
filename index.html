@@ -638,11 +638,21 @@
     return false;
   }
 
+  // Mapea los códigos de la columna G a las categorías del catálogo
+  var CATEGORY_CODES = {
+    'F18': 'f1-118',
+    'F24': 'f1-124',
+    'F43': 'f1-143',
+    'V18': 'vehiculos-118',
+    'MF': 'mas-f1'
+  };
+
   // Clasifica cada fila del sheet en una de las 5 categorías del catálogo.
-  // Si el sheet trae una columna "CATEGORIA" con un valor válido, esa tiene prioridad.
+  // La columna G (código F18/F24/F43/V18/MF) manda si tiene un valor válido.
+  // Si no, cae a la detección automática por nombre como respaldo.
   function classify(row){
-    var manual = (row['CATEGORIA'] || '').toString().trim().toLowerCase();
-    if(GRID_IDS[manual]) return manual;
+    var codigoCol = (row['CATEGORIA_COL'] || '').toString().trim().toUpperCase();
+    if(CATEGORY_CODES[codigoCol]) return CATEGORY_CODES[codigoCol];
 
     var nombre = (row['NOMBRE'] || '').toString();
     var n = nombre.toLowerCase();
@@ -742,6 +752,7 @@
           var obj = {};
           headers.forEach(function(h, idx){ obj[h] = line[idx]; });
           obj['PRECIO_USD'] = line[5]; // Columna F, precio en dólares
+          obj['CATEGORIA_COL'] = line[6]; // Columna G, categoría manual (F18/F24/F43/V18/MF)
           rows.push(obj);
         }
 
