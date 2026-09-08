@@ -659,10 +659,16 @@
 
   function cardHTML(row){
     var nombre = row['NOMBRE'] || 'Sin nombre';
-    var precio = money(row['PRECIO']);
+    var precioUSD = money(row['PRECIO_USD']);
     var imagen = (row['IMAGEN'] || '').toString().trim();
     var disponibleRaw = (row['DISPONIBLE'] || '').toString().trim().toUpperCase();
     var enStock = disponibleRaw === 'SI' || disponibleRaw === 'SÍ';
+
+    // Formatea el precio con signo $ si el sheet no lo trae ya incluido
+    var precioDisplay = precioUSD;
+    if(precioDisplay && precioDisplay.charAt(0) !== '$'){
+      precioDisplay = '$' + precioDisplay;
+    }
 
     var imageInner = imagen
       ? '<img src="' + imagen.replace(/"/g,'&quot;') + '" alt="' + nombre.replace(/"/g,'&quot;') + '" loading="lazy">'
@@ -678,7 +684,7 @@
         '<div class="card-body">' +
           '<div class="card-name">' + nombre + '</div>' +
           '<div class="card-footer">' +
-            '<div class="card-price">' + (precio || 'Consultar') + '</div>' +
+            '<div class="card-price">' + (precioDisplay || 'Consultar') + '</div>' +
             '<button class="card-cta"' + (enStock ? '' : ' disabled') + '>' + (enStock ? 'Consultar' : 'Agotado') + '</button>' +
           '</div>' +
         '</div>' +
@@ -690,6 +696,8 @@
     var buckets = { 'f1-118': [], 'f1-124': [], 'f1-143': [], 'vehiculos-118': [], 'mas-f1': [] };
 
     rows.forEach(function(row){
+      var codigo = (row['CÓDIGO'] || row['CODIGO'] || '').toString().trim();
+      if(!codigo) return; // sin código en columna B, se descarta la fila completa
       if(!row['NOMBRE'] || !row['NOMBRE'].toString().trim()) return;
       var cat = classify(row);
       buckets[cat].push(row);
@@ -733,6 +741,7 @@
           if(!line || line.every(function(c){ return !c || !c.toString().trim(); })) continue;
           var obj = {};
           headers.forEach(function(h, idx){ obj[h] = line[idx]; });
+          obj['PRECIO_USD'] = line[5]; // Columna F, precio en dólares
           rows.push(obj);
         }
 
